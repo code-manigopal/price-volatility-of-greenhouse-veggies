@@ -1,0 +1,7 @@
+pandas
+requests
+numpy
+statsmodels
+python-dotenv
+fredapi
+flask

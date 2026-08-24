@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# raw/processed data can be large or license-restricted; keep out of git
+raw_data/*.csv
+processed_data/*.csv
+!raw_data/.gitkeep
+!processed_data/.gitkeep
