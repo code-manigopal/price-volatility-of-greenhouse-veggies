@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greenhouse Vegetable Price Drivers — Findings Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-dark: #1B4332;
+    --green-mid: #2D6A4F;
+    --coral: #C1440E;
+    --coral-light: #F5D9C8;
+    --amber: #B08968;
+    --paper: #F7F5EF;
+    --card: #FFFFFF;
+    --ink: #2B2B28;
+    --ink-muted: #6B6A63;
+    --sage: #8A9A8E;
+    --sage-light: #E7ECE8;
+    --hairline: #DDD9CC;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+  header.hero {
+    border-bottom: 3px solid var(--green-dark);
+    padding-bottom: 2rem;
+    margin-bottom: 2.5rem;
+  }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 0.6rem;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 2.6rem;
+    line-height: 1.1;
+    margin: 0 0 0.6rem;
+    color: var(--green-dark);
+  }
+  .subtitle {
+    font-size: 1.05rem;
+    color: var(--ink-muted);
+    max-width: 640px;
+    margin: 0;
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+    margin-bottom: 3rem;
+  }
+  .stat-tile {
+    background: var(--card);
+    padding: 1.2rem 1.4rem;
+  }
+  .stat-value {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.9rem;
+    color: var(--green-dark);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    margin-top: 0.4rem;
+  }
+
+  section { margin-bottom: 3.2rem; }
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: var(--green-dark);
+    margin: 0 0 0.3rem;
+  }
+  .section-note {
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    margin: 0 0 1.4rem;
+    max-width: 680px;
+  }
+
+  .chart-card {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    padding: 1.6rem 1.6rem 1.2rem;
+  }
+
+  .finding-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .finding-card {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-left: 4px solid var(--coral);
+    padding: 1.1rem 1.3rem;
+  }
+  .finding-card.secondary { border-left-color: var(--amber); }
+  .finding-rank {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--coral);
+    margin-bottom: 0.3rem;
+  }
+  .finding-title {
+    font-weight: 600;
+    font-size: 1.02rem;
+    margin-bottom: 0.35rem;
+  }
+  .finding-coef {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--green-mid);
+    margin-bottom: 0.5rem;
+  }
+  .finding-body {
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+  }
+
+  .so-what-band {
+    background: var(--green-dark);
+    color: #F0F5F1;
+    padding: 1.6rem 1.8rem;
+    margin: 0 0 3rem;
+  }
+  .so-what-band .eyebrow { color: #B7D9C4; }
+  .so-what-band p {
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    font-style: italic;
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  .flat-list {
+    background: var(--sage-light);
+    border: 1px solid var(--hairline);
+    padding: 1.2rem 1.4rem;
+    font-size: 0.88rem;
+    color: var(--ink-muted);
+  }
+  .flat-list strong { color: var(--ink); font-weight: 600; }
+  .flat-list .row { margin-bottom: 0.5rem; }
+  .flat-list .row:last-child { margin-bottom: 0; }
+
+  footer {
+    border-top: 1px solid var(--hairline);
+    padding-top: 1.2rem;
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  @media (max-width: 640px) {
+    .stat-row { grid-template-columns: repeat(2, 1fr); }
+    h1 { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Greenhouse Price Drivers — Final Regression Model</div>
+    <h1>What actually moves wholesale prices</h1>
+    <p class="subtitle">25 years of North American terminal market data (2001–2025), tomatoes / peppers / cucumbers, Boston / New York / Chicago / Detroit.</p>
+  </header>
+
+  <div class="stat-row">
+    <div class="stat-tile">
+      <div class="stat-value">2,664</div>
+      <div class="stat-label">observations</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-value">0.352</div>
+      <div class="stat-label">R² (variance explained)</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-value">66.16</div>
+      <div class="stat-label">F-statistic</div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-value">&lt;0.001</div>
+      <div class="stat-label">model significance (p)</div>
+    </div>
+  </div>
+
+  <div class="so-what-band">
+    <div class="eyebrow">So what</div>
+    <p>Greenhouse vegetable prices are driven mainly by season and energy cost — winter commands a real premium because field-grown competitors are out of season, and every dollar of heating cost measurably passes through into the price growers charge.</p>
+  </div>
+
+  <section>
+    <h2>The seasonal price curve</h2>
+    <p class="section-note">Price relative to January, holding everything else constant. This single pattern is the largest source of explained variance in the entire model.</p>
+    <div class="chart-card">
+      <div style="position: relative; height: 280px;">
+        <canvas id="seasonChart" role="img" aria-label="Line chart showing monthly price relative to January, dropping to a low in August around negative 7 dollars, then recovering toward December.">
+          Monthly price change vs January: Feb -2.24, Mar -1.74, Apr -4.13, May -5.51, Jun -6.10, Jul -5.74, Aug -7.20, Sep -6.07, Oct -4.47, Nov -2.60, Dec -1.18.
+        </canvas>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Confirmed drivers, ranked by strength</h2>
+    <p class="section-note">All statistically significant (p &lt; 0.05), ranked by practical size of effect.</p>
+    <div class="finding-grid">
+      <div class="finding-card">
+        <div class="finding-rank">01</div>
+        <div class="finding-title">ToBRFV disease period (2019–)</div>
+        <div class="finding-coef">+$3.52 &middot; p &lt; 0.001</div>
+        <div class="finding-body">Largest single effect in the model. A real, industry-wide tomato virus that has structurally raised prices since 2019.</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-rank">02</div>
+        <div class="finding-title">Commodity type</div>
+        <div class="finding-coef">Peppers +$0.97 &middot; Tomatoes −$2.75</div>
+        <div class="finding-body">Relative to cucumbers. Reflects normal produce market structure and relative commoditization.</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-rank">03</div>
+        <div class="finding-title">Market (city)</div>
+        <div class="finding-coef">−$1.18 to −$1.43 &middot; p &lt; 0.001</div>
+        <div class="finding-body">Boston is priced highest; Chicago, Detroit, and New York all run cheaper — plausibly a proximity/shipping-cost effect.</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-rank">04</div>
+        <div class="finding-title">Total gas cost (Henry Hub + carbon tax)</div>
+        <div class="finding-coef">+0.158 per $1 &middot; p &lt; 0.001</div>
+        <div class="finding-body">The core thesis result: heating cost pass-through is real and measurable, not just theoretical.</div>
+      </div>
+      <div class="finding-card secondary">
+        <div class="finding-rank">05</div>
+        <div class="finding-title">Minimum nightly temperature</div>
+        <div class="finding-coef">+0.106 per °C &middot; p = 0.008</div>
+        <div class="finding-body">Colder nights associate with modestly higher prices — likely stress on field-grown competitor crops.</div>
+      </div>
+      <div class="finding-card secondary">
+        <div class="finding-rank">06</div>
+        <div class="finding-title">COVID-19 disruption</div>
+        <div class="finding-coef">−$1.05 &middot; p = 0.023</div>
+        <div class="finding-body">Prices fell, not rose — demand destruction (restaurant closures) likely outweighed supply-side disruption.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tested honestly, reported either way</h2>
+    <div class="flat-list">
+      <div class="row"><strong>Not significant:</strong> precipitation (p=0.287), California drought severity (p=0.240), Canada unemployment rate as a labor-availability proxy (p=0.212)</div>
+      <div class="row"><strong>Excluded for collinearity:</strong> US Food CPI, Ontario minimum wage, USD/CAD, USD/MXN, StatCan area harvested, max temperature, sunshine hours, diesel price, consumer sentiment, foodservice sales — each too statistically redundant with a variable already retained</div>
+    </div>
+  </section>
+
+  <footer>
+    N=2,664 · monthly panel, 2001–2025 · OLS with HC3 robust SE, VIF-filtered, month/commodity/market fixed effects
+  </footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+  const ctx = document.getElementById('seasonChart');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      datasets: [{
+        label: 'Price vs January ($)',
+        data: [0, -2.24, -1.74, -4.13, -5.51, -6.10, -5.74, -7.20, -6.07, -4.47, -2.60, -1.18],
+        borderColor: '#C1440E',
+        backgroundColor: 'rgba(193,68,14,0.08)',
+        fill: true,
+        tension: 0.35,
+        borderWidth: 2.5,
+        pointRadius: 4,
+        pointBackgroundColor: '#C1440E',
+        pointBorderColor: '#F7F5EF',
+        pointBorderWidth: 1.5,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: {
+          grid: { color: '#DDD9CC' },
+          ticks: { color: '#6B6A63', font: { family: 'IBM Plex Mono', size: 11 },
+            callback: (v) => (v < 0 ? '-$' : '$') + Math.abs(v) },
+        },
+        x: {
+          grid: { display: false },
+          ticks: { color: '#6B6A63', font: { family: 'IBM Plex Mono', size: 11 } },
+        },
+      },
+    }
+  });
+</script>
+</body>
+</html>
