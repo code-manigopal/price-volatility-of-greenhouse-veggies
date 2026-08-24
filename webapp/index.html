@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Greenhouse Vegetable Price Drivers — Findings Dashboard</title>
+<title>Greenhouse Vegetable Price Drivers — Project Walkthrough</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,13 +12,11 @@
     --green-dark: #1B4332;
     --green-mid: #2D6A4F;
     --coral: #C1440E;
-    --coral-light: #F5D9C8;
     --amber: #B08968;
     --paper: #F7F5EF;
     --card: #FFFFFF;
     --ink: #2B2B28;
     --ink-muted: #6B6A63;
-    --sage: #8A9A8E;
     --sage-light: #E7ECE8;
     --hairline: #DDD9CC;
   }
@@ -28,14 +26,14 @@
     background: var(--paper);
     color: var(--ink);
     font-family: 'IBM Plex Sans', sans-serif;
-    line-height: 1.6;
+    line-height: 1.65;
   }
   .wrap { max-width: 1040px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
 
   header.hero {
     border-bottom: 3px solid var(--green-dark);
     padding-bottom: 2rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
   }
   .eyebrow {
     font-family: 'IBM Plex Mono', monospace;
@@ -48,16 +46,117 @@
   h1 {
     font-family: 'Fraunces', serif;
     font-weight: 500;
-    font-size: 2.6rem;
+    font-size: 2.5rem;
     line-height: 1.1;
-    margin: 0 0 0.6rem;
+    margin: 0 0 0.7rem;
     color: var(--green-dark);
   }
-  .subtitle {
-    font-size: 1.05rem;
+  .subtitle { font-size: 1.05rem; color: var(--ink-muted); max-width: 680px; margin: 0; }
+
+  .stage {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+  }
+  .stage-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .stage-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: var(--paper);
+    background: var(--green-dark);
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .stage-line { flex: 1; width: 2px; background: var(--hairline); margin-top: 0.6rem; }
+  .stage:last-of-type .stage-line { display: none; }
+  .stage-content h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.6rem;
+    color: var(--green-dark);
+    margin: 0.2rem 0 0.3rem;
+  }
+  .stage-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: var(--ink-muted);
-    max-width: 640px;
-    margin: 0;
+    margin-bottom: 0.5rem;
+  }
+  .stage-body p { font-size: 0.96rem; color: var(--ink); max-width: 720px; margin: 0 0 0.9rem; }
+  .stage-body p:last-child { margin-bottom: 0; }
+
+  .source-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.7rem;
+    margin: 1.2rem 0;
+  }
+  .source-card {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    padding: 0.8rem 1rem;
+  }
+  .source-name { font-weight: 600; font-size: 0.88rem; margin-bottom: 0.15rem; }
+  .source-what { font-size: 0.8rem; color: var(--ink-muted); }
+
+  .snag-box {
+    background: #FBF0E8;
+    border-left: 4px solid var(--coral);
+    padding: 0.9rem 1.1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  .snag-box strong { color: var(--coral); }
+
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1.2rem 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+  }
+  .flow-step {
+    background: var(--sage-light);
+    border: 1px solid var(--hairline);
+    padding: 0.5rem 0.9rem;
+  }
+  .flow-arrow { color: var(--ink-muted); }
+
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.8rem;
+    margin: 1.2rem 0;
+  }
+  .method-card {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-top: 3px solid var(--green-mid);
+    padding: 1rem 1.1rem;
+  }
+  .method-title { font-weight: 600; font-size: 0.92rem; margin-bottom: 0.3rem; }
+  .method-body { font-size: 0.85rem; color: var(--ink-muted); }
+
+  .pill-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+  .pill {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    background: var(--sage-light);
+    border: 1px solid var(--hairline);
+    padding: 0.25rem 0.6rem;
+    color: var(--ink-muted);
   }
 
   .stat-row {
@@ -66,118 +165,74 @@
     gap: 1px;
     background: var(--hairline);
     border: 1px solid var(--hairline);
-    margin-bottom: 3rem;
+    margin: 1.2rem 0;
   }
-  .stat-tile {
-    background: var(--card);
-    padding: 1.2rem 1.4rem;
-  }
-  .stat-value {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 1.9rem;
-    color: var(--green-dark);
-    line-height: 1;
-  }
-  .stat-label {
-    font-size: 0.8rem;
-    color: var(--ink-muted);
-    margin-top: 0.4rem;
-  }
-
-  section { margin-bottom: 3.2rem; }
-  h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 1.5rem;
-    color: var(--green-dark);
-    margin: 0 0 0.3rem;
-  }
-  .section-note {
-    font-size: 0.92rem;
-    color: var(--ink-muted);
-    margin: 0 0 1.4rem;
-    max-width: 680px;
-  }
+  .stat-tile { background: var(--card); padding: 1rem 1.2rem; }
+  .stat-value { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.7rem; color: var(--green-dark); line-height: 1; }
+  .stat-label { font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.35rem; }
 
   .chart-card {
     background: var(--card);
     border: 1px solid var(--hairline);
-    padding: 1.6rem 1.6rem 1.2rem;
+    padding: 1.4rem 1.4rem 1rem;
+    margin: 1.2rem 0;
   }
 
   .finding-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 0.9rem;
+    margin: 1.2rem 0;
   }
   .finding-card {
     background: var(--card);
     border: 1px solid var(--hairline);
     border-left: 4px solid var(--coral);
-    padding: 1.1rem 1.3rem;
+    padding: 1rem 1.2rem;
   }
   .finding-card.secondary { border-left-color: var(--amber); }
-  .finding-rank {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--coral);
-    margin-bottom: 0.3rem;
-  }
-  .finding-title {
-    font-weight: 600;
-    font-size: 1.02rem;
-    margin-bottom: 0.35rem;
-  }
-  .finding-coef {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--green-mid);
-    margin-bottom: 0.5rem;
-  }
-  .finding-body {
-    font-size: 0.92rem;
-    color: var(--ink-muted);
-  }
+  .finding-title { font-weight: 600; font-size: 0.98rem; margin-bottom: 0.3rem; }
+  .finding-coef { font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; color: var(--green-mid); margin-bottom: 0.45rem; }
+  .finding-body { font-size: 0.88rem; color: var(--ink-muted); }
 
   .so-what-band {
     background: var(--green-dark);
     color: #F0F5F1;
     padding: 1.6rem 1.8rem;
-    margin: 0 0 3rem;
+    margin-top: 0.5rem;
   }
   .so-what-band .eyebrow { color: #B7D9C4; }
-  .so-what-band p {
-    font-family: 'Fraunces', serif;
-    font-size: 1.25rem;
-    font-weight: 400;
-    font-style: italic;
-    margin: 0;
-    line-height: 1.45;
-  }
+  .so-what-band p { font-family: 'Fraunces', serif; font-size: 1.2rem; font-style: italic; margin: 0; line-height: 1.5; }
 
-  .flat-list {
-    background: var(--sage-light);
-    border: 1px solid var(--hairline);
-    padding: 1.2rem 1.4rem;
-    font-size: 0.88rem;
-    color: var(--ink-muted);
+  .takeaway-list { margin: 1.2rem 0 0; padding: 0; list-style: none; }
+  .takeaway-list li {
+    padding: 0.7rem 0 0.7rem 1.6rem;
+    border-bottom: 1px solid var(--hairline);
+    font-size: 0.92rem;
+    position: relative;
   }
-  .flat-list strong { color: var(--ink); font-weight: 600; }
-  .flat-list .row { margin-bottom: 0.5rem; }
-  .flat-list .row:last-child { margin-bottom: 0; }
+  .takeaway-list li:last-child { border-bottom: none; }
+  .takeaway-list li::before {
+    content: "→";
+    position: absolute; left: 0;
+    color: var(--coral);
+    font-weight: 600;
+  }
 
   footer {
     border-top: 1px solid var(--hairline);
     padding-top: 1.2rem;
-    font-size: 0.8rem;
+    margin-top: 2rem;
+    font-size: 0.78rem;
     color: var(--ink-muted);
     font-family: 'IBM Plex Mono', monospace;
   }
 
   @media (max-width: 640px) {
+    .stage { grid-template-columns: 40px 1fr; gap: 1rem; }
+    .stage-num { width: 34px; height: 34px; font-size: 1.2rem; }
     .stat-row { grid-template-columns: repeat(2, 1fr); }
-    h1 { font-size: 2rem; }
+    h1 { font-size: 1.9rem; }
   }
 </style>
 </head>
@@ -185,100 +240,174 @@
 <div class="wrap">
 
   <header class="hero">
-    <div class="eyebrow">Greenhouse Price Drivers — Final Regression Model</div>
-    <h1>What actually moves wholesale prices</h1>
-    <p class="subtitle">25 years of North American terminal market data (2001–2025), tomatoes / peppers / cucumbers, Boston / New York / Chicago / Detroit.</p>
+    <div class="eyebrow">A Project Walkthrough</div>
+    <h1>How I found what actually drives greenhouse vegetable prices</h1>
+    <p class="subtitle">From raw public data to a tested, honestly-reported regression model — built as a portfolio project for a Data Analytics Engineer role at Mastronardi Produce.</p>
   </header>
 
-  <div class="stat-row">
-    <div class="stat-tile">
-      <div class="stat-value">2,664</div>
-      <div class="stat-label">observations</div>
-    </div>
-    <div class="stat-tile">
-      <div class="stat-value">0.352</div>
-      <div class="stat-label">R² (variance explained)</div>
-    </div>
-    <div class="stat-tile">
-      <div class="stat-value">66.16</div>
-      <div class="stat-label">F-statistic</div>
-    </div>
-    <div class="stat-tile">
-      <div class="stat-value">&lt;0.001</div>
-      <div class="stat-label">model significance (p)</div>
+  <!-- STAGE 1: WHY -->
+  <div class="stage">
+    <div class="stage-marker"><div class="stage-num">1</div><div class="stage-line"></div></div>
+    <div class="stage-content">
+      <div class="stage-tag">Starting point</div>
+      <h2>Why this project</h2>
+      <div class="stage-body">
+        <p>The question I set out to answer: what actually moves the wholesale price of greenhouse-grown tomatoes, peppers, and cucumbers? Not a guess, not a general industry narrative — an actual, tested, defensible answer, built the way a real analytics engineer would build it: source real data, question every assumption, and report what holds up and what doesn't.</p>
+        <p>Everything here uses public data, but the process — sourcing, cleaning, joining, modeling, and reporting honestly — mirrors the real work.</p>
+      </div>
     </div>
   </div>
 
-  <div class="so-what-band">
-    <div class="eyebrow">So what</div>
-    <p>Greenhouse vegetable prices are driven mainly by season and energy cost — winter commands a real premium because field-grown competitors are out of season, and every dollar of heating cost measurably passes through into the price growers charge.</p>
+  <!-- STAGE 2: DATA COLLECTION -->
+  <div class="stage">
+    <div class="stage-marker"><div class="stage-num">2</div><div class="stage-line"></div></div>
+    <div class="stage-content">
+      <div class="stage-tag">How the data was collected</div>
+      <h2>Ten sources, twenty-five years, four markets</h2>
+      <div class="stage-body">
+        <p>The final model draws on ten independent public sources, each chosen deliberately rather than defaulted to.</p>
+      </div>
+      <div class="source-grid">
+        <div class="source-card"><div class="source-name">USDA AMS</div><div class="source-what">Wholesale prices, Boston/NY/Chicago/Detroit, 2001–2025</div></div>
+        <div class="source-card"><div class="source-name">Open-Meteo</div><div class="source-what">Daily weather for the actual growing regions</div></div>
+        <div class="source-card"><div class="source-name">FRED</div><div class="source-what">Natural gas, currency, CPI, sentiment, diesel, unemployment</div></div>
+        <div class="source-card"><div class="source-name">Statistics Canada</div><div class="source-what">Ontario greenhouse production &amp; area harvested</div></div>
+        <div class="source-card"><div class="source-name">Canada federal carbon charge</div><div class="source-what">Verified schedule, 2019 start through 2025 repeal</div></div>
+        <div class="source-card"><div class="source-name">NOAA / NDMC</div><div class="source-what">California drought severity</div></div>
+      </div>
+      <div class="stage-body">
+        <p>Almost none of this came easily on the first try — and that turned out to be the most instructive part of the project.</p>
+      </div>
+      <div class="snag-box"><strong>Silent failure #1 —</strong> the USDA price API returned zero rows for peppers, with no error, for an entire session. Peppers have no generic "Peppers" category in USDA's system — only sub-types like "Peppers, Bell Type." Fixed by querying the exact sub-type name.</div>
+      <div class="snag-box"><strong>Silent failure #2 —</strong> Bank of Canada's exchange rate series has a real methodology break in 2017 (discontinued "noon rates" replaced by "daily average" rates). Splicing them together would have quietly corrupted 20 years of currency data. Switched to FRED's single continuous series instead.</div>
+      <div class="snag-box"><strong>Slow, not wrong —</strong> an early NOAA weather integration worked but took 10–20+ minutes to run. Swapped to Open-Meteo: same data, no API key, full 25-year pull in seconds.</div>
+    </div>
   </div>
 
-  <section>
-    <h2>The seasonal price curve</h2>
-    <p class="section-note">Price relative to January, holding everything else constant. This single pattern is the largest source of explained variance in the entire model.</p>
-    <div class="chart-card">
-      <div style="position: relative; height: 280px;">
-        <canvas id="seasonChart" role="img" aria-label="Line chart showing monthly price relative to January, dropping to a low in August around negative 7 dollars, then recovering toward December.">
-          Monthly price change vs January: Feb -2.24, Mar -1.74, Apr -4.13, May -5.51, Jun -6.10, Jul -5.74, Aug -7.20, Sep -6.07, Oct -4.47, Nov -2.60, Dec -1.18.
-        </canvas>
+  <!-- STAGE 3: ORGANIZATION -->
+  <div class="stage">
+    <div class="stage-marker"><div class="stage-num">3</div><div class="stage-line"></div></div>
+    <div class="stage-content">
+      <div class="stage-tag">How it's organized</div>
+      <h2>A resumable pipeline, joined to one monthly table</h2>
+      <div class="stage-body">
+        <p>Rather than one large script, the project is a numbered sequence of small, single-purpose scripts — one per source, a merge stage, then modeling.</p>
+      </div>
+      <div class="flow">
+        <div class="flow-step">fetch (per source)</div><span class="flow-arrow">→</span>
+        <div class="flow-step">raw_data/*.csv</div><span class="flow-arrow">→</span>
+        <div class="flow-step">merge &amp; resample</div><span class="flow-arrow">→</span>
+        <div class="flow-step">monthly_panel.csv</div><span class="flow-arrow">→</span>
+        <div class="flow-step">regression</div>
+      </div>
+      <div class="stage-body">
+        <p><strong>Resumable by design:</strong> each fetch script logs exactly which chunk of data it has already pulled. An interrupted run — network drop, closed laptop — can be restarted without re-downloading or duplicating anything. This mattered in practice: the price pull alone eventually produced close to a million rows.</p>
+        <p><strong>Frequency decision:</strong> sources arrive at wildly different granularities — daily prices, daily weather, monthly gas prices, annual production. Everything resamples to a <strong>monthly</strong> panel: fine enough to preserve real seasonal variation, coarse enough that even StatCan's annual production figures fit in (spread evenly across each year's months, a documented approximation, not a hidden one).</p>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section>
-    <h2>Confirmed drivers, ranked by strength</h2>
-    <p class="section-note">All statistically significant (p &lt; 0.05), ranked by practical size of effect.</p>
-    <div class="finding-grid">
-      <div class="finding-card">
-        <div class="finding-rank">01</div>
-        <div class="finding-title">ToBRFV disease period (2019–)</div>
-        <div class="finding-coef">+$3.52 &middot; p &lt; 0.001</div>
-        <div class="finding-body">Largest single effect in the model. A real, industry-wide tomato virus that has structurally raised prices since 2019.</div>
+  <!-- STAGE 4: REGRESSION -->
+  <div class="stage">
+    <div class="stage-marker"><div class="stage-num">4</div><div class="stage-line"></div></div>
+    <div class="stage-content">
+      <div class="stage-tag">How the regression was done</div>
+      <h2>OLS, with two disciplined guardrails</h2>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-title">Robust standard errors (HC3)</div>
+          <div class="method-body">Commodity price data doesn't have uniform variance across markets and time — HC3 keeps the significance tests trustworthy anyway.</div>
+        </div>
+        <div class="method-card">
+          <div class="method-title">VIF-based filtering</div>
+          <div class="method-body">Every candidate variable is checked for overlap with the others before the model is fit. Anything above VIF = 10 is dropped and logged — never silently discarded.</div>
+        </div>
+        <div class="method-card">
+          <div class="method-title">Fixed effects</div>
+          <div class="method-body">Month, commodity, and market dummies absorb baseline differences (seasonality, product type, city) without needing to explain them separately.</div>
+        </div>
       </div>
-      <div class="finding-card">
-        <div class="finding-rank">02</div>
-        <div class="finding-title">Commodity type</div>
-        <div class="finding-coef">Peppers +$0.97 &middot; Tomatoes −$2.75</div>
-        <div class="finding-body">Relative to cucumbers. Reflects normal produce market structure and relative commoditization.</div>
+      <div class="stage-body">
+        <p>The VIF guardrail did most of the real work. About a dozen reasonable-sounding variables were tested and excluded — not because they don't matter economically, but because they share the same slow upward trend over 25 years and become statistically indistinguishable once several are in the same model together:</p>
       </div>
-      <div class="finding-card">
-        <div class="finding-rank">03</div>
-        <div class="finding-title">Market (city)</div>
-        <div class="finding-coef">−$1.18 to −$1.43 &middot; p &lt; 0.001</div>
-        <div class="finding-body">Boston is priced highest; Chicago, Detroit, and New York all run cheaper — plausibly a proximity/shipping-cost effect.</div>
-      </div>
-      <div class="finding-card">
-        <div class="finding-rank">04</div>
-        <div class="finding-title">Total gas cost (Henry Hub + carbon tax)</div>
-        <div class="finding-coef">+0.158 per $1 &middot; p &lt; 0.001</div>
-        <div class="finding-body">The core thesis result: heating cost pass-through is real and measurable, not just theoretical.</div>
-      </div>
-      <div class="finding-card secondary">
-        <div class="finding-rank">05</div>
-        <div class="finding-title">Minimum nightly temperature</div>
-        <div class="finding-coef">+0.106 per °C &middot; p = 0.008</div>
-        <div class="finding-body">Colder nights associate with modestly higher prices — likely stress on field-grown competitor crops.</div>
-      </div>
-      <div class="finding-card secondary">
-        <div class="finding-rank">06</div>
-        <div class="finding-title">COVID-19 disruption</div>
-        <div class="finding-coef">−$1.05 &middot; p = 0.023</div>
-        <div class="finding-body">Prices fell, not rose — demand destruction (restaurant closures) likely outweighed supply-side disruption.</div>
+      <div class="pill-row">
+        <span class="pill">US Food CPI</span><span class="pill">Ontario min wage</span><span class="pill">USD/CAD</span>
+        <span class="pill">USD/MXN</span><span class="pill">StatCan area harvested</span><span class="pill">Max temperature</span>
+        <span class="pill">Sunshine hours</span><span class="pill">Diesel price</span><span class="pill">Consumer sentiment</span>
+        <span class="pill">Foodservice sales</span><span class="pill">Unemployment rate (not sig.)</span>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section>
-    <h2>Tested honestly, reported either way</h2>
-    <div class="flat-list">
-      <div class="row"><strong>Not significant:</strong> precipitation (p=0.287), California drought severity (p=0.240), Canada unemployment rate as a labor-availability proxy (p=0.212)</div>
-      <div class="row"><strong>Excluded for collinearity:</strong> US Food CPI, Ontario minimum wage, USD/CAD, USD/MXN, StatCan area harvested, max temperature, sunshine hours, diesel price, consumer sentiment, foodservice sales — each too statistically redundant with a variable already retained</div>
+  <!-- STAGE 5: FINDINGS -->
+  <div class="stage">
+    <div class="stage-marker"><div class="stage-num">5</div><div class="stage-line"></div></div>
+    <div class="stage-content">
+      <div class="stage-tag">What the model found</div>
+      <h2>The results</h2>
+      <div class="stat-row">
+        <div class="stat-tile"><div class="stat-value">2,664</div><div class="stat-label">observations</div></div>
+        <div class="stat-tile"><div class="stat-value">0.352</div><div class="stat-label">R² explained</div></div>
+        <div class="stat-tile"><div class="stat-value">66.16</div><div class="stat-label">F-statistic</div></div>
+        <div class="stat-tile"><div class="stat-value">&lt;0.001</div><div class="stat-label">significance (p)</div></div>
+      </div>
+
+      <div class="chart-card">
+        <div style="position: relative; height: 260px;">
+          <canvas id="seasonChart" role="img" aria-label="Line chart showing monthly price relative to January, dropping to a low in August around negative 7 dollars, then recovering toward December.">
+            Monthly price change vs January: Feb -2.24, Mar -1.74, Apr -4.13, May -5.51, Jun -6.10, Jul -5.74, Aug -7.20, Sep -6.07, Oct -4.47, Nov -2.60, Dec -1.18.
+          </canvas>
+        </div>
+      </div>
+
+      <div class="finding-grid">
+        <div class="finding-card">
+          <div class="finding-title">ToBRFV disease period (2019–)</div>
+          <div class="finding-coef">+$3.52 · p &lt; 0.001</div>
+          <div class="finding-body">Largest single effect in the model — a real, industry-wide tomato virus that structurally raised prices.</div>
+        </div>
+        <div class="finding-card">
+          <div class="finding-title">Total gas cost (Henry Hub + carbon tax)</div>
+          <div class="finding-coef">+0.158 per $1 · p &lt; 0.001</div>
+          <div class="finding-body">The core thesis result: heating cost pass-through is real and measurable.</div>
+        </div>
+        <div class="finding-card secondary">
+          <div class="finding-title">Minimum nightly temperature</div>
+          <div class="finding-coef">+0.106 per °C · p = 0.008</div>
+          <div class="finding-body">Colder nights associate with modestly higher prices — likely stress on field-grown competitors.</div>
+        </div>
+        <div class="finding-card secondary">
+          <div class="finding-title">COVID-19 disruption</div>
+          <div class="finding-coef">−$1.05 · p = 0.023</div>
+          <div class="finding-body">Prices fell, not rose — demand destruction likely outweighed supply-side disruption.</div>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
+
+  <!-- STAGE 6: TAKEAWAYS -->
+  <div class="stage">
+    <div class="stage-marker"><div class="stage-num">6</div></div>
+    <div class="stage-content">
+      <div class="stage-tag">What's in it for us</div>
+      <h2>The takeaway</h2>
+      <div class="so-what-band">
+        <div class="eyebrow">So what</div>
+        <p>Greenhouse vegetable prices are driven mainly by season and energy cost — winter commands a real premium because field-grown competitors are out of season, and every dollar of heating cost measurably passes through into the price growers charge.</p>
+      </div>
+      <ul class="takeaway-list">
+        <li>Energy cost exposure is quantifiable — supports proactive hedging tied to natural gas price movements.</li>
+        <li>ToBRFV's price impact has been large and sustained — continued investment in disease resistance has a clear economic rationale beyond crop protection alone.</li>
+        <li>Seasonal timing is the dominant lever — production and marketing strategy should keep leaning into the confirmed winter price advantage.</li>
+        <li>Reporting what <em>didn't</em> work — CPI, minimum wage, diesel, unemployment rate — is what makes the model trustworthy, not a weakness in it.</li>
+        <li>With internal company data (procurement costs, SAWP labor permit counts, true monthly production), this model could go from a strong portfolio piece to something genuinely production-grade.</li>
+      </ul>
+    </div>
+  </div>
 
   <footer>
-    N=2,664 · monthly panel, 2001–2025 · OLS with HC3 robust SE, VIF-filtered, month/commodity/market fixed effects
+    N=2,664 · monthly panel, 2001–2025 · OLS with HC3 robust SE, VIF-filtered, month/commodity/market fixed effects<br>
+    <span style="color: #C1440E;">dashboard v2 — narrative walkthrough layout</span>
   </footer>
 
 </div>
