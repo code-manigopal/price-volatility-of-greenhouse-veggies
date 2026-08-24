@@ -40,7 +40,7 @@ docs/             thesis writeup, notes
 - `05_merge_and_process.py` — join everything into one panel, add lags/dummies *(not yet built)*
 - `06_regression.py` — OLS with VIF filtering, robust SEs *(not yet built)*
 
-## Known gaps / limitations (flag these in the thesis)
+## Known gaps / limitations
 
 - Competitor production volume (Village Farms, Mucci Farms, Pure Flavor)
   has no clean public API — proxy with regional StatCan/USDA totals instead.
